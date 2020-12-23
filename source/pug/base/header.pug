@@ -1,0 +1,24 @@
+include ../variables/site-url
+mixin header(mod)
+  header.header(class= mod && 'header--' + mod)
+    .header__wrapper
+      a.header__logo(href= SiteUrl.MAIN !== CURRENT_URL && SiteUrl.MAIN aria-label="Переход на главную") Логотип
+
+      nav.main-nav
+        button.main-nav__toggle.btn-reset(type="button" aria-label="Переключатель отображения меню" aria-pressed="false")
+          svg(width="20" height="20")
+            use(xlink:href='#icon-burger')
+        .main-nav__wrapper
+          ul.main-nav__list
+            li.main-nav__item
+              a.main-nav__link(class= (CURRENT_URL === SiteUrl.MAIN && 'main-nav__link--active')
+                href= CURRENT_URL !== SiteUrl.MAIN && SiteUrl.MAIN)= `Страница ${SiteUrl.MAIN}`
+            li.main-nav__item
+              a.main-nav__link(class= (CURRENT_URL === SiteUrl.SITE_1 && 'main-nav__link--active')
+                href= CURRENT_URL !== SiteUrl.SITE_1 && SiteUrl.SITE_1)= `Страница ${SiteUrl.SITE_1}`
+            li.main-nav__item
+              a.main-nav__link(class= (CURRENT_URL === SiteUrl.SITE_2 && 'main-nav__link--active')
+                href= CURRENT_URL !== SiteUrl.SITE_2 && SiteUrl.SITE_2)= `Страница ${SiteUrl.SITE_2}`
+            li.main-nav__item
+              a.main-nav__link(class= (CURRENT_URL === SiteUrl.SITE_1 && 'main-nav__link--active')
+                href= CURRENT_URL !== SiteUrl.SITE_2 && SiteUrl.SITE_2)= `Страница ${SiteUrl.SITE_2}`

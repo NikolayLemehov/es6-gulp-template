@@ -1,0 +1,41 @@
+include variables/site-url
+include base/header
+include base/modal
+-
+  var feedbackOption = {
+    name: 'feedback',
+  }
+  var successOption = {
+    name: 'success',
+    responsive: true,
+    fitContent: false,
+    noScale: true,
+    mod: 'some-mode',
+  }
+//- include base/mixins
+- var CURRENT_URL = SiteUrl.MAIN
+
+doctype html
+html(lang="ru")
+  head
+    //include build/img/sprite_auto.svg
+    include base/head
+    title ProjectName — Главная
+
+  body
+    .wrapper
+      +header('mod')
+      main
+        .container
+          p
+            a(href="#" data-modal="feedback") modal--feedback link
+          p
+            a(href="#" data-modal="success") modal--success link
+
+      include base/footer
+    +modal(feedbackOption)
+      include component/modal-feedback
+    +modal(successOption)
+      include component/modal-success
+    script(src= 'js/vendor.min.js')
+    script(src= 'js/main.min.js')

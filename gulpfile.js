@@ -15,19 +15,34 @@ const uglify = require(`gulp-uglify`);
 const webpackStream = require(`webpack-stream`);
 const webpackConfig = require(`./webpack.config.js`);
 const concat = require(`gulp-concat`);
-const fileinclude = require(`gulp-file-include`);
+// const fileinclude = require(`gulp-file-include`);
+const pug = require(`gulp-pug`);
+const pugLinter = require('gulp-pug-linter');
+// const htmlValidator = require('gulp-w3c-html-validator');
+// const bemValidator = require('gulp-html-bem-validator');
 
-gulp.task(`html`, function () {
-  return gulp.src([`source/html/*.html`])
-    .pipe(fileinclude({
-      prefix: `@@`,
-      basepath: `@root`,
-      context: { // глобальные переменные для include
-        test: `text`
-      }
-    }))
-    .pipe(gulp.dest(`build`));
+// gulp.task(`html`, function () {
+//   return gulp.src([`source/html/*.html`])
+//     .pipe(fileinclude({
+//       prefix: `@@`,
+//       basepath: `@root`,
+//       context: { // глобальные переменные для include
+//         test: `text`
+//       }
+//     }))
+//     .pipe(gulp.dest(`build`));
+// });
+
+gulp.task("pug", function () {
+  return gulp.src("source/pug/*.pug")
+    .pipe(plumber())
+    .pipe(pugLinter({ reporter: 'default' }))
+    .pipe(pug({ pretty: true }))
+    // .pipe(htmlValidator())
+    // .pipe(bemValidator())
+    .pipe(gulp.dest("build"));
 });
+
 
 gulp.task(`css`, function () {
   return gulp.src(`source/sass/style.scss`)
@@ -82,11 +97,11 @@ gulp.task(`server`, function () {
     ui: false,
   });
 
-  gulp.watch(`source/html/**/*.html`, gulp.series(`html`, `refresh`));
+  gulp.watch(`source/pug/**/*.pug`, gulp.series(`pug`, `refresh`));
   gulp.watch(`source/sass/**/*.{scss,sass}`, gulp.series(`css`));
   gulp.watch(`source/js/**/*.js`, gulp.series(`script`, `refresh`));
-  gulp.watch(`source/img/**/*.svg`, gulp.series(`copysvg`, `sprite`, `html`, `refresh`));
-  gulp.watch(`source/img/**/*.{png,jpg}`, gulp.series(`copypngjpg`, `html`, `refresh`));
+  gulp.watch(`source/img/**/*.svg`, gulp.series(`copysvg`, `sprite`, `pug`, `refresh`));
+  gulp.watch(`source/img/**/*.{png,jpg}`, gulp.series(`copypngjpg`, `pug`, `refresh`));
 });
 
 gulp.task(`refresh`, function (done) {
@@ -129,7 +144,7 @@ gulp.task(`build`, gulp.series(
     `sprite`,
     `css`,
     `script`,
-    `html`
+    `pug`
 ));
 
 gulp.task(`start`, gulp.series(`build`, `server`));

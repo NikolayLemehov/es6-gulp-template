@@ -1,0 +1,11 @@
+mixin modal(option)
+  -var {name, responsive = false, fitContent = false, noScale = false, mod = ''} = option;
+  .modal.modal--preload(class= 'modal--' + name class= responsive && 'modal--responsive'
+    class= fitContent && 'modal--fit-content' class= noScale && 'modal--no-scale' class= mod && 'modal--' + mod)
+    .modal__wrapper
+      .modal__overlay
+      .modal__content
+        block
+      button.modal__close-btn.btn-reset(type= 'button' aria-label= 'Закрыть попап')
+        svg(width= '15', height= '15')
+          use(xlink:href= 'img/sprite_auto.svg#icon-close')

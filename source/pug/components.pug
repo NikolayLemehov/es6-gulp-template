@@ -1,0 +1,33 @@
+include base/header
+
+doctype html
+html(lang="ru")
+  head
+    include base/head
+    title ProjectName — Компоненты
+    style
+      include components.css
+  body
+    .wrapper
+      +header()
+      main
+        .container
+          a.components-backwards(href= 'index.html')
+            span
+            span вернуться на разводящую
+          h1 Компоненты, используемые в вёрстке
+          section
+            h2 Название компонента или группы компонентов
+            p Класс компонента \ модификаторы
+            p(style= 'color: red;') При необходимости, подсказки \ предупреждение \ важная информация
+            div Компонент
+
+          //- Всегда оставляйте коммент ниже, чтобы удобно было копипастить
+            section
+             h2
+             p
+
+
+      include base/footer
+    script(src= 'js/vendor.min.js')
+    script(src= 'js/main.min.js')

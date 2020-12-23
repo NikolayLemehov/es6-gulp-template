@@ -1,0 +1,26 @@
+doctype html
+html(lang="ru")
+  head
+    include base/head.pug
+    title Оглавление
+
+    style(type='text/css').
+      .container {
+        padding-top: 50px;
+        padding-bottom: 50px;
+      }
+
+      a {
+        color: blue;
+      }
+
+  body
+
+    main
+      .container
+        h1 Список страниц
+        ol
+          li
+            a(href="components.html") Компоненты
+          li
+            a(href="main.html") Главная --- main.html
